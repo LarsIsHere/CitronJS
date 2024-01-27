@@ -38,7 +38,7 @@ result: "Hello, you!"
 
 
 Other features:
-|  | w |
+| tag | Description |
 | ------------ | ------------ |
-|   |   |
+|  bind | Binds a variable to an element. If you put the id of an input element the var will automatically adopt the inputs value. |
 
