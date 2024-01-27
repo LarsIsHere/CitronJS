@@ -31,7 +31,8 @@ result: "Hello, World!"
 
 to change the var value, use: 
 ```html 
-<sample name="Sample 1" foo="you">```
+<sample name="Sample 1" foo="you">
+```
 result: "Hello, you!"
 
 
