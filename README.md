@@ -4,7 +4,7 @@ The way it works is that you make "samples" that you can then use in your code a
 
 ### Making a Sample
 Make a new .citron file and include it in your main html file. 
-````html
+```html
 <sample name="Sample 1">
   <h1>Hello, { foo }!</h1>
 </sample>
@@ -12,7 +12,7 @@ Make a new .citron file and include it in your main html file.
 This is a sample with the content "Hello, " . { foo } represents a variable that you can then fill with whatever you need to dynamically change the content.
 
 To finish we need to export the sample and the variable:
-````html
+```html
 <citron>
   <export sample="Sample 1">
     <var var="foo" default="World">
