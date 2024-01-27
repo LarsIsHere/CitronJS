@@ -8,7 +8,7 @@ Make a new .citron file and include it in your main html file.
 <sample name="Sample 1">
   <h1>Hello, { foo }!</h1>
 </sample>
-````
+```
 This is a sample with the content "Hello, " . { foo } represents a variable that you can then fill with whatever you need to dynamically change the content.
 
 To finish we need to export the sample and the variable:
@@ -22,22 +22,23 @@ To finish we need to export the sample and the variable:
 <sample name="Sample 1">
   <h1>Hello, { foo }!</h1>
 </sample>
-````
+```
 
 now that we have done that we can use this sample in our html file as we wish by writing
-```html 
-<sample name="Sample 1">```
+```html
+<sample name="Sample 1">
+```
 result: "Hello, World!"
 
 to change the var value, use: 
-```html 
+```html
 <sample name="Sample 1" foo="you">
 ```
 result: "Hello, you!"
 
 
 
-Other features:
+#### Other features
 | tag | Description |
 | ------------ | ------------ |
 |  bind | Binds a variable to an element. If you put the id of an input element the var will automatically adopt the inputs value. |
