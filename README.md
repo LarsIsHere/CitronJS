@@ -1,4 +1,4 @@
-
+## CitronJS
 ![Group 3](https://github.com/LarsIsHere/CitronJS/assets/118752107/ff1411ab-fdb4-4f6f-ad40-718a3836734e)<svg width="50" height="50" viewBox="0 0 237 239" fill="none" xmlns="http://www.w3.org/2000/svg">
 <circle cx="118.5" cy="118.5" r="118.5" fill="white"/>
 <circle cx="118" cy="118" r="105" fill="#F7B81A"/>
@@ -24,7 +24,7 @@
 </svg>
 
 
-## CitronJS
+
 CitronJS is a js library to use alongside HTML. What it offers is an easy way to paste a lot of big repetetive code.
 The way it works is that you make "samples" that you can then use in your code as much as you need. 
 
