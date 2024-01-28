@@ -30,7 +30,11 @@ The way it works is that you make "samples" that you can then use in your code a
 
 ### Installation
 Currently the only way to include CitronJS is through script:src github. 
-`https://raw.githubusercontent.com/LarsIsHere/CitronJS/main/src/v1-0-0/index.min.js`
+
+```
+https://raw.githubusercontent.com/LarsIsHere/CitronJS/main/src/v1-0-0/index.min.js
+```
+
 ### Making a Sample
 Make a new .citron file and include it in your main html file. 
 ```html
