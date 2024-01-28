@@ -28,6 +28,9 @@
 CitronJS is a js library to use alongside HTML. What it offers is an easy way to paste a lot of big repetetive code.
 The way it works is that you make "samples" that you can then use in your code as much as you need. 
 
+### Installation
+Currently the only way to include CitronJS is through script:src github. 
+`https://raw.githubusercontent.com/LarsIsHere/CitronJS/main/src/v1-0-0/index.min.js`
 ### Making a Sample
 Make a new .citron file and include it in your main html file. 
 ```html
