@@ -25,76 +25,82 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const xmlContent = await response.text();
             const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(xmlContent, 'text/html');
-            
-            var parserErrors = xmlDoc.getElementsByTagName('parsererror');
+            const xmlDocument = parser.parseFromString(xmlContent, 'text/html');
+            const serializer = new XMLSerializer();
+            const xmlDocAsString = serializer.serializeToString(xmlDocument);
+            CitronJSDynamicCache.push(xmlDocAsString);
+
+            var parserErrors = xmlDocument.getElementsByTagName('parsererror');
             for (var j = parserErrors.length - 1; j >= 0; j--) {
                 parserErrors[j].parentNode.removeChild(parserErrors[j]);
             }
             
             // xmlDoc is the imported citronjs file
             //xmlChecklist
-            xmlChecklist(xmlDoc, e.getAttribute('src'));
+            xmlChecklist(xmlDocument, e.getAttribute('src'));
             const samples = document.getElementsByTagName('sample');
             for (let i = samples.length - 1; i >= 0; i--) {
-                const sample = samples[i];
+                const sample1 = samples[i];
 
-                const sampleName = sample.getAttribute('c-name');
+                //const sampleName = sample.getAttribute('c-name');
                 
-                const exports = xmlDoc.getElementsByTagName('export');
-                let export_names = [];
-                for (let i = exports.length - 1; i >= 0; i--) {
-                    console.log(exports[i].getAttribute('sample'));
-                    export_names.push(exports[i].getAttribute('sample'));
-                }
-                if (export_names.includes(sampleName)) {
-                    const FileSamples = xmlDoc.getElementsByTagName('sample');
-                    let FileSampleNames = [];
-                    for (let i = FileSamples.length - 1; i >= 0; i--) {
-                        const FileSample = FileSamples[i];
-                        FileSampleNames.push(FileSample.getAttribute('name'));
-                        if (FileSampleNames.includes(sampleName)) {
-                            const FinalSampleElement = FileSample;
-                            if (FinalSampleElement !== undefined) {
-                                const parser = new DOMParser();
-                                let htmlString = FinalSampleElement.innerHTML;
-                                // ready
-                                // if (sample)
-                                let targetElement = [...exports].find(element => element.hasAttribute('sample') && element.getAttribute('sample') === sampleName);
-                                if (targetElement !== undefined && targetElement.hasChildNodes()) {
-                                    const children = targetElement.childNodes;
-                                    for (let i = 0; i < children.length; i++) {
-                                        child = children[i];
-                                        if (child.tagName === "VAR") {
-                                            const variable = child.getAttribute('var');
-                                            if (htmlString.includes('{ ' + variable + ' }')) {
-                                                if (sample.hasAttribute(variable)) {
-                                                    htmlString = htmlString.replace(new RegExp('\\{\\s*' + variable + '\\s*\\}', 'g'), sample.getAttribute(variable));
-                                                } else {
-                                                    if (child.hasAttribute('default')) {
-                                                        htmlString = htmlString.replace(new RegExp('\\{\\s*' + variable + '\\s*\\}', 'g'), child.getAttribute('default'));
+                mainSampleHandler(xmlDocument, sample1);
+                function mainSampleHandler (xmlDoc, sample) {
+                    const sampleName = sample.getAttribute('c-name'); 
+                    const exports = xmlDoc.getElementsByTagName('export');
+                    let export_names = [];
+                    for (let i = exports.length - 1; i >= 0; i--) {
+                        
+                        export_names.push(exports[i].getAttribute('sample'));
+                    }
+                    if (export_names.includes(sampleName)) {
+                        const FileSamples = xmlDoc.getElementsByTagName('sample');
+                        let FileSampleNames = [];
+                        for (let i = FileSamples.length - 1; i >= 0; i--) {
+                            const FileSample = FileSamples[i];
+                            FileSampleNames.push(FileSample.getAttribute('name'));
+                            if (FileSampleNames.includes(sampleName)) {
+                                const FinalSampleElement = FileSample;
+                                if (FinalSampleElement !== undefined) {
+    
+                                    const parser = new DOMParser();
+                                    let htmlString = FinalSampleElement.innerHTML;
+                                    // ready
+                                    // if (sample)
+                                    let targetElement = [...exports].find(element => element.hasAttribute('sample') && element.getAttribute('sample') === sampleName);
+                                    if (targetElement !== undefined && targetElement.hasChildNodes()) {
+                                        const children = targetElement.childNodes;
+                                        for (let i = 0; i < children.length; i++) {
+                                            child = children[i];
+                                            if (child.tagName === "VAR") {
+                                                const variable = child.getAttribute('var');
+                                                if (htmlString.includes('{ ' + variable + ' }')) {
+                                                    if (sample.hasAttribute(variable)) {
+                                                        htmlString = htmlString.replace(new RegExp('\\{\\s*' + variable + '\\s*\\}', 'g'), sample.getAttribute(variable));
+                                                    } else {
+                                                        if (child.hasAttribute('default')) {
+                                                            htmlString = htmlString.replace(new RegExp('\\{\\s*' + variable + '\\s*\\}', 'g'), child.getAttribute('default'));
+                                                        }
                                                     }
                                                 }
                                             }
                                         }
                                     }
+                                    const doc = parser.parseFromString(htmlString, 'text/html');
+                                    sample.replaceWith(doc.body.firstChild);
                                 }
-                                const doc = parser.parseFromString(htmlString, 'text/html');
-                                sample.replaceWith(doc.body.firstChild);
                             }
                         }
                     }
                 }
+
             }
         } catch (error) {
-            console.error('[CitronJS]: ' + error.message);
+            console.error('[CitronJS]: ' + error);
         }
     }
-});
 
 
-const config = { childList: true };
-/*
 // Callback function to execute when mutations occur
 const callback = async function(mutationsList, observer) {
     for(let mutation of mutationsList) {
@@ -126,17 +132,45 @@ const callback = async function(mutationsList, observer) {
                     // handle dynamically added sample elements
                     const sample = node;
                     const sampleName = sample.getAttribute('c-name');
-                    const xmlDoc = '';
+                    console.log(sampleName);
+                    let match = null;
+                    CitronJSDynamicCache.forEach(element => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(element, 'text/html');
+
+                        const ExportMatches = doc.getElementsByTagName('export');
+                        for (let i = 0; i < ExportMatches.length; i++) {
+                            const ExportMatch = ExportMatches[i];
+                            if (ExportMatch.hasAttribute('sample')) {
+                                if (ExportMatch.getAttribute('sample') === sampleName) {
+                                    match = doc;
+                                    console.log(match);
+                                }
+                                
+                            }
+                        }
+                    });
+
+                    if (match !== null) {
+                        const xmlDoc = match;
+                        console.log(xmlDoc);
+                        mainSampleHandler(xmlDoc, sample);
+                        console.log("hi");
+                    }
                     
                 }
             }
         }
     }
+    
 };
 
 const observer = new MutationObserver(callback);
-observer.observe(document, config);
-*/
+observer.observe(document.documentElement || document.body, { childList: true, subtree: true });
+
+});
+
+
 // checklist
 function xmlChecklist(xmlDoc, fileName) {
     // Check for duplicate sample names across multiple files
