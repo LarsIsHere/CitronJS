@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CitronJS vs HTMS</title>
+    <script src="https://htms.fsh.plus/js/index-v4.js" type="module" crossorigin="anonymous"></script>
+    <script src="/src/v1-0-0/index.min.js"></script>
+    <style>htms{display:none}</style>
+    
+    <c-import src="test1_citron.xml"></c-import>
+
+    <htms>
+        import "Test1","image_stress_test" from "test1_htms.xml"
+        replace "test1" with "Test1"
+        replace "image_stress_test" with "image_stress_test"
+    </htms>
+</head>
+<body>
+    <h1>CitronJS vs HTMS</h1>
+    <h3>This is not hating on HTMS. It's a mere test to compare these libraries with basically the same functionality. We are aware that the speeds depend highly on latency and the general internet connection. Check out htms <a href="https://htms.fsh.plus/">here </a></h3>
+    <hr>
+    <p>In this experiment we make two identical "Samples" with both libraries, showing the visual difference in load times.</p>
+    <h4>Test 1 - Hello World</h4>
+
+    <sample c-name="test1"></sample>
+    <test1></test1>
+
+    <h4>Test 2 - Raw base64 Image stress test (aprox 4mb)</h4>
+    <sample c-name="image_stress_test"></sample>
+    <image_stress_test></image_stress_test>
+<style>
+    html { font-family: sans-serif; color: #373737;background: #e7e7e7; }
+</style>
+</body>
+</html>
