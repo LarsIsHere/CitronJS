@@ -33,3 +33,4 @@ https://larsisheres-organization.gitbook.io/citron-js
 
 ### Stress test
 compared to other similar libraries
+https://larsishere.github.io/CitronJS/comparison/
