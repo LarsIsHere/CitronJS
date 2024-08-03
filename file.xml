@@ -1,0 +1,17 @@
+<citron>
+
+    <export sample="Sample1">
+        <var var="test" default="World"></var>
+        <var var="nottest" default="World"></var>
+    </export>
+    <export sample="Sample2"></export>
+
+
+    <sample name="Sample1">
+        <h1> Hello, { test } and { nottest }!</h1>
+    </sample>
+    <sample name="Sample2">
+        <h1> Hello World 2</h1>
+    </sample>
+
+</citron>
