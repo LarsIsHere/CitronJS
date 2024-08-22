@@ -26,7 +26,7 @@ CitronJS.addEntry = function (file, src) {
         entry = CitronJS.generateRand();
     }
     const serializer = new XMLSerializer();
-    xmlDocAsString = serializer.serializeToString(file);
+    const xmlDocAsString = serializer.serializeToString(file);
     // cache the content
     CitronJS.DyCache[entry] = { file: xmlDocAsString, src: src };
 
