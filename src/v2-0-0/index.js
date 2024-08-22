@@ -38,8 +38,6 @@ CitronJS.addEntry = function (file, src) {
         CitronJS.ObCache[exportSample.getAttribute('sample')] = entry;
         
     }
-    console.log(CitronJS.DyCache);
-    console.log(CitronJS.ObCache);
     
 
 }
@@ -84,7 +82,6 @@ CitronJS.handleImports = async function (src) {
 }
 
 CitronJS.isSyntaxValid = function (xml) {
-    console.log("passed syntax");
     return true;
 }
 
@@ -95,8 +92,6 @@ CitronJS.generateRand = function () {
 }
 
 CitronJS.handleSample = async function (sampleNode) {
-    console.log("handling sample");
-    console.log(sampleNode);
     const sampleName = sampleNode.getAttribute('name'); 
     if (CitronJS.ObCache.hasOwnProperty(sampleName)) {
 
@@ -138,7 +133,6 @@ CitronJS.handleSample = async function (sampleNode) {
             for (let i = 0; i < ExportVars.length; i++) {
                 const ExportVar = ExportVars[i];
                 const varName = ExportVar.getAttribute('var');
-                console.log(varName);
                 if (FinalString.includes("{ " + varName + " }")) {
                     // if a value was provided
                     if (sampleNode.hasAttribute(varName)) {
@@ -185,7 +179,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const e = imports[i];
         if (e.hasAttribute('src')) {
             await CitronJS.handleImports(e.getAttribute('src'));
-            console.log("domload import passed. " + e);
         }
     }
 
@@ -194,7 +187,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const b = samples[i];
         if (b.hasAttribute('name')) {
             await CitronJS.handleSample(b);
-            console.log("domload sample passed. " + b);
         }
     }
     const observer = new MutationObserver(callback);
@@ -221,9 +213,7 @@ const callback = async function(mutationsList, observer) {
             }
         } else if (mutation.type === 'attributes') {
             const targetElement = mutation.target;
-            console.log("attributes ch")
             if (targetElement.tagName.toLowerCase() === 'sample') {
-                console.log(`Attribute ${mutation.attributeName} changed on <a> element.`);
                 CitronJS.handleSample(mutation.target);
               }
         }
