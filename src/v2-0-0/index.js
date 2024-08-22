@@ -155,7 +155,6 @@ CitronJS.handleSample = async function (sampleNode) {
             sampleNode.innerHTML = FinalString;
         } else {
             sampleNode.outerHTML = FinalString;
-            sampleNode.outerHTML = "<p>hello</p>";
         }
         
     }
