@@ -1,7 +1,10 @@
 <citron>
-    <export sample="Hello World"></export>
+    <export sample="Hello World">
+        <var var="test" default="testtstet"></var>
+    </export>
     
-    <sample name="Hello World">
-        <h1>Hello, World!</h1>
+    <sample name="Hello World" keepSkeleton="true">
+        <h1>Hello, World!  { test }{ test }{ test } </h1>
+        <p>gu</p>
     </sample>
 </citron>
