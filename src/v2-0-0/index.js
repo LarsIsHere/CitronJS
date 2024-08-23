@@ -147,14 +147,16 @@ CitronJS.handleSample = async function (sampleNode) {
 
         
         if (sampleNode.hasAttribute('keepWrapper')) {
-            sampleNode.innerHTML = FinalString;
+            sampleNode.innerHTML = convertXmlToHtmlSelfClosingTags(FinalString);
         } else {
-            sampleNode.outerHTML = FinalString;
+            sampleNode.outerHTML = convertXmlToHtmlSelfClosingTags(FinalString);
         }
         
     }
 }
-
+function convertXmlToHtmlSelfClosingTags(html) {
+    return html.replace(/<(\w+)([^>]*)\/>/g, '<$1$2></$1>');
+}
 
 CitronJS.lazyQueue = function () {}
 
