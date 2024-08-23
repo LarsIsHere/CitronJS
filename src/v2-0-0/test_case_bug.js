@@ -50,8 +50,7 @@ CitronJS.handleImports = async function (src) {
     const xmlContent = await response.text();
     
     const parser = new DOMParser();
-    const pre_xmlDoc = parser.parseFromString(xmlContent, 'text/html');
-    const xmlDoc = pre_xmlDoc.body.innerHTML;
+    const xmlDoc = parser.parseFromString(xmlContent, 'application/xml');
     // verify syntax
     
     if (CitronJS.isSyntaxValid(xmlDoc)) {
@@ -105,8 +104,7 @@ CitronJS.handleSample = async function (sampleNode) {
         // samplename is the name of the sample, xmlDoc is the file which contains the sample
         // sampleNode is the element to be replaced
         const parser = new DOMParser();
-        const pre_xmlDoc = parser.parseFromString(CitronJS.DyCache[entry].file, 'text/html');
-        const xmlDoc = pre_xmlDoc.body.innerHTML;
+        const xmlDoc = parser.parseFromString(CitronJS.DyCache[entry].file, 'application/xml');
         
 
         
@@ -149,14 +147,16 @@ CitronJS.handleSample = async function (sampleNode) {
 
         
         if (sampleNode.hasAttribute('keepWrapper')) {
-            sampleNode.innerHTML = FinalString;
+            sampleNode.innerHTML = convertXmlToHtmlSelfClosingTags(FinalString);
         } else {
-            sampleNode.outerHTML = FinalString;
+            sampleNode.outerHTML = convertXmlToHtmlSelfClosingTags(FinalString);
         }
         
     }
 }
-
+function convertXmlToHtmlSelfClosingTags(html) {
+    return html.replace(/<(\w+)([^>]*)\/>/g, '<$1$2></$1>');
+}
 
 CitronJS.lazyQueue = function () {}
 
